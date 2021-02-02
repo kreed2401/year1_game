@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+# include <windows.h>
 #include <iostream>
 
 
@@ -65,6 +66,7 @@ void Reset()
     ball.setPosition(gameWidth / 2 + ballRadius, gameHeight / 2);
     ballVelocity = { (server ? 100.0f : -100.0f), 60.0f };
     text.setString(p1Score + "|" + p2Score);
+    std:cout << (p1Score + "|" + p2Score);
 }
 
 void ballCollision()
@@ -119,6 +121,12 @@ void ballCollision()
     }
 }
 
+void timer(int sec) 
+{
+    Sleep(sec * 1000);
+}
+
+
 void Update(RenderWindow& window)
 {
     static Clock clock;
@@ -135,7 +143,7 @@ void Update(RenderWindow& window)
     }
 
     if (Keyboard::isKeyPressed(Keyboard::Escape)) window.close();
-    if (Keyboard::isKeyPressed(Keyboard::I)) aiControlled = !aiControlled;
+    if (Keyboard::isKeyPressed(Keyboard::I)){ aiControlled = !aiControlled; }
 
     float direction = 0.0f;
     float p2Direction = 0.0f;
@@ -188,6 +196,18 @@ void Update(RenderWindow& window)
             }
     }
     
+    if (p1Score == 5) 
+    {
+        std::cout << "P1 Wins";
+        timer(5);
+        window.close();
+    }
+    else if(p2Score == 5)
+    {
+        std::cout << "P2 Wins";
+        timer(5);
+        window.close();
+    }
 
 }
 
