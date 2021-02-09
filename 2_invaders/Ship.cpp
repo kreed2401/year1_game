@@ -1,9 +1,11 @@
 #include "ship.h"
 #include "game.h"
 #include <iostream>
-
+#include "bullet.h"
 using namespace sf;
 using namespace std;
+
+std::vector<Bullet*> bullets;
 
 Ship::Ship() {};
 
@@ -66,6 +68,7 @@ Player::Player(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 	setPosition(pos);
 }
 
+bool canShoot = true;
 
 void Player::Update(const float &dt)
 {
@@ -80,5 +83,15 @@ void Player::Update(const float &dt)
 	{
 		if(getPosition().x < gameWidth - 16)move(direction * 200 * dt, 0);
 	}
+
+	if (Keyboard::isKeyPressed(Keyboard::Space) && canShoot)
+	{
+		
+		auto bul = new Bullet(getPosition(), false);
+		bullets.push_back(bul);
+		canShoot = false;
+	}
+
+	if(!Keyboard::isKeyPressed(Keyboard::Space))canShoot = true;
 
 }

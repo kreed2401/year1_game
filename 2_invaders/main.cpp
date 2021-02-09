@@ -3,6 +3,7 @@
 #include <iostream>
 #include "ship.h"
 #include "game.h"
+#include "bullet.h"
 
 using namespace sf;
 using namespace std;
@@ -32,7 +33,8 @@ const Keyboard::Key controls[3] =
 
 void Load() 
 {
-    if (!spritesheet.loadFromFile("res/invaders_sheet.png")) {
+    if (!spritesheet.loadFromFile("res/invaders_sheet.png")) 
+    {
         cerr << "Failed to load spritesheet!" << std::endl;
     }
 
@@ -48,7 +50,7 @@ void Load()
         auto rect = IntRect(32*r, 0, 32, 32);
         for (int c = 0; c < invaders_columns; ++c) 
         {
-            Vector2f position = Vector2f((gameWidth/4) + (32*c), 100 + (32*r));
+            Vector2f position = Vector2f(float(gameWidth/4) + (32*c), float(100 + (32*r)));
             auto inv = new Invader(rect, position);
             ships.push_back(inv);
         }
@@ -64,6 +66,7 @@ void Update(RenderWindow& window)
     {
         s->Update(dt);
     };
+
 
     if (Keyboard::isKeyPressed(Keyboard::Escape)) window.close();
 

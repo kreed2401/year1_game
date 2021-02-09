@@ -1,6 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "bullet.h"
+
+//extern std::vector<Bullet*> bullets;
 
 class Ship : public sf::Sprite 
 {
