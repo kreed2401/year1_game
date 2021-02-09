@@ -2,18 +2,31 @@
 #include <windows.h>
 #include <iostream>
 #include "ship.h"
+#include "game.h"
 
 using namespace sf;
 using namespace std;
-
+/*
 const int gameWidth = 800;
 const int gameHeight = 600;
+*/
+float direction = 0.0f;
 
 sf::Texture spritesheet;
 sf::Sprite invader;
 
 //Location to Reference of Ships
 std::vector<Ship*> ships;
+
+Ship* player;
+
+//Initilize Keyboard Controls
+const Keyboard::Key controls[3] =
+{
+    Keyboard::A,//Left
+    Keyboard::D,//Right
+    Keyboard::Space,//Shoot
+};
 
 
 
@@ -26,16 +39,14 @@ void Load()
     Invader::speed = 30.0f;
     Invader::direction = true;
 
-    //Invader* inv = new Invader(sf::IntRect(0, 0, 32, 32), { 100,100 });
-    //ships.push_back(inv);
 
-    int invader_rows = 6;
-    int invader_columns = 12;
+    player = new Player(IntRect(160,32,32,32),Vector2f(gameWidth/2,gameHeight-32));
+    ships.push_back(player);
 
-    for (int r = 0; r < invader_rows; ++r) 
+    for (int r = 0; r < invaders_rows; ++r) 
     {
         auto rect = IntRect(32*r, 0, 32, 32);
-        for (int c = 0; c < invader_columns; ++c) 
+        for (int c = 0; c < invaders_columns; ++c) 
         {
             Vector2f position = Vector2f((gameWidth/4) + (32*c), 100 + (32*r));
             auto inv = new Invader(rect, position);
@@ -53,6 +64,20 @@ void Update(RenderWindow& window)
     {
         s->Update(dt);
     };
+
+    if (Keyboard::isKeyPressed(Keyboard::Escape)) window.close();
+
+    direction = 0;
+
+    if (Keyboard::isKeyPressed(controls[0]))
+    {
+            direction--;
+    }
+
+    if (Keyboard::isKeyPressed(controls[1]))
+    {
+        direction++;
+    }
 }
 
 void Render(RenderWindow& window) 
