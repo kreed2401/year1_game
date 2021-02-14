@@ -3,7 +3,6 @@
 #include <iostream>
 #include "ship.h"
 #include "game.h"
-#include "bullet.h"
 
 using namespace sf;
 using namespace std;
@@ -20,6 +19,7 @@ sf::Sprite invader;
 std::vector<Ship*> ships;
 
 Ship* player;
+
 
 //Initilize Keyboard Controls
 const Keyboard::Key controls[3] =
@@ -65,8 +65,7 @@ void Update(RenderWindow& window)
     for (auto& s : ships)
     {
         s->Update(dt);
-    };
-
+    }
 
     if (Keyboard::isKeyPressed(Keyboard::Escape)) window.close();
 
