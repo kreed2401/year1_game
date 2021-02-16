@@ -7,6 +7,7 @@ using namespace std;
 
 Ship::Ship() {};
 
+
 Ship::Ship(IntRect ir) : Sprite() 
 {
 	_sprite = ir;
@@ -92,6 +93,9 @@ void Player::Update(const float &dt)
 
 	if (Keyboard::isKeyPressed(Keyboard::Space) && canShoot)
 	{
+		int x = Player::getPosition().x;
+		int y = Player::getPosition().y;
+		cerr << (to_string(x));
 		Bullet::Fire(getPosition(), false);
 		canShoot = false;
 	}

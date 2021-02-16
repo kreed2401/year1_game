@@ -9,7 +9,9 @@ public:
 
 	Bullet(const sf::Vector2f& pos, const bool mode);
 	~Bullet() = default;
+
 protected:
+
 	static unsigned char bulletPointer;
 	static Bullet bullets[256];
 	//Called by the static update

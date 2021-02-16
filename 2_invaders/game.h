@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Ship.h"
+#include "bullet.h"
 
 constexpr uint16_t gameWidth = 800;
 constexpr uint16_t gameHeight = 600;
