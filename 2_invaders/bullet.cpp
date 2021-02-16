@@ -5,26 +5,29 @@
 using namespace sf;
 using namespace std;
 
+IntRect texRect;
+
 Bullet::Bullet (const sf::Vector2f& pos, const bool mode) : Sprite()
 {
-	IntRect texRect;
-	_mode = mode;
-	if (mode) 
-	{
-		texRect = IntRect(64, 32, 32, 32);
-	}
-	else 
-	{
-		texRect = IntRect(32, 32, 32, 32);
-	}
-	setPosition(pos);
-	setTexture(spritesheet);
-	setTextureRect(texRect);
+    _mode = false;
+    bulletPointer = 1;
+	texRect;
+    setTexture(spritesheet);
 };
 
 void Bullet::Fire(const sf::Vector2f& pos, const bool mode) 
 {
-    bullets[++bulletPointer].Bullet::Bullet(pos, mode);
+    if (mode)
+    {
+        texRect = IntRect(64, 32, 32, 32);
+    }
+    else
+    {
+        texRect = IntRect(32, 32, 32, 32);
+    }
+    bullets[bulletPointer]._mode = mode;
+    bullets[bulletPointer].setPosition(pos);
+    bullets[bulletPointer].setTextureRect(texRect);
 }
 
 

@@ -92,7 +92,7 @@ void Player::Update(const float &dt)
 
 	if (Keyboard::isKeyPressed(Keyboard::Space) && canShoot)
 	{
-		
+		Bullet::Fire(getPosition(), false);
 		canShoot = false;
 	}
 
