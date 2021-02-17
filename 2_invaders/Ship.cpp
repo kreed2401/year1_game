@@ -5,6 +5,8 @@
 using namespace sf;
 using namespace std;
 
+
+
 Ship::Ship() {};
 
 
@@ -15,6 +17,10 @@ Ship::Ship(IntRect ir) : Sprite()
 	setTextureRect(_sprite);
 };
 
+bool Ship::is_exploded(void)const 
+{
+	return _exploded;
+}
 
 void Ship::Update(const float& dt) {}
 
@@ -27,6 +33,7 @@ Ship::~Ship() = default;
 
 bool Invader::direction;
 float Invader::speed;
+
 
 void Ship::Explode() 
 {
@@ -93,10 +100,10 @@ void Player::Update(const float &dt)
 
 	if (Keyboard::isKeyPressed(Keyboard::Space) && canShoot)
 	{
-		int x = Player::getPosition().x;
-		int y = Player::getPosition().y;
-		cerr << (to_string(x));
-		Bullet::Fire(getPosition(), false);
+		float x = Player::getPosition().x - 16;
+		float y = Player::getPosition().y - 32;
+		Vector2f pos = Vector2f(x, y);
+		Bullet::Fire(pos, false);
 		canShoot = false;
 	}
 
