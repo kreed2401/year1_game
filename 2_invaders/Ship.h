@@ -6,7 +6,6 @@ class Ship : public sf::Sprite
 {
 protected:
     sf::IntRect _sprite;
-
     bool _exploded = false;
 
     Ship();
@@ -30,6 +29,7 @@ public:
     Invader(sf::IntRect ir, sf::Vector2f pos);
     Invader();
     void Update(const float& dt) override;
+    void reset(sf::IntRect ir, sf::Vector2f pos);
 };
 
 class Player : public Ship {

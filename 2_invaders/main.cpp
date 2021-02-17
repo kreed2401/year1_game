@@ -16,6 +16,7 @@ float direction = 0.0f;
 sf::Texture spritesheet;
 sf::Sprite invader;
 
+
 //Location to Reference of Ships
 std::vector<Ship*> ships;
 
@@ -33,6 +34,8 @@ const Keyboard::Key controls[3] =
 
 void Load() 
 {
+    
+
     if (!spritesheet.loadFromFile("res/invaders_sheet.png")) {
         cerr << "Failed to load spritesheet!" << std::endl;
     }
@@ -80,6 +83,13 @@ void Update(RenderWindow& window)
         direction++;
     }
     Bullet::Update(dt);
+
+    if (player->is_exploded()) 
+    {
+        static float deathtime = 2.0f;
+        deathtime -= dt;
+        if (deathtime <= 0) window.close();
+    }
 }
 
 void Render(RenderWindow& window) 
