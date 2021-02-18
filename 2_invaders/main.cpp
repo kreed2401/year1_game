@@ -90,6 +90,17 @@ void Update(RenderWindow& window)
         deathtime -= dt;
         if (deathtime <= 0) window.close();
     }
+
+    if (Invader::shipsAlive <= 0) 
+    {
+        for (auto& s : ships) 
+        {
+            if (s!= player) 
+            {
+                s->reset();
+            }
+        }
+    }
 }
 
 void Render(RenderWindow& window) 

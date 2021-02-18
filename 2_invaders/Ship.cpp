@@ -23,6 +23,16 @@ bool Ship::is_exploded(void)const
 
 void Ship::Update(const float& dt) {}
 
+void Ship::reset()
+{
+	Invader::speed = 10;
+	_exploded = false;
+	Invader::shipsAlive++;
+	setPosition(spawn);
+	setTextureRect(texRec);
+	setTexture(spritesheet);
+}
+
 //Ship deconstructor. 
 Ship::~Ship() = default;
 
@@ -32,27 +42,23 @@ Ship::~Ship() = default;
 
 bool Invader::direction;
 float Invader::speed;
-
+int Invader::shipsAlive;
 
 void Ship::Explode() 
 {
 	setTextureRect(IntRect(128, 32, 32, 32));
 	_exploded = true;
-	Invader::speed = Invader::speed + 2.5f;
-	int invadersAlive = 0;
-	for (int i = 0; i < ships.size(); ++i)
-	{
-		if (ships[i] != player && !ships[i]->is_exploded()) invadersAlive++;
-	}
-	if (invadersAlive <= 0)
-	{
-
-	}
-
+	Invader::speed = Invader::speed + 4.0f;
+	Invader::shipsAlive--;
+	cerr << (Invader::shipsAlive);
+	cerr << (" ");
 }
 
 
+
+
 Invader::Invader() : Ship() {}
+
 
 
 Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) 
@@ -60,12 +66,11 @@ Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 	setOrigin(16, 16);
 	setPosition(pos);
 	Invader::speed = 10;
+	spawn = pos;
+	shipsAlive++;
 }
 
-void Invader::reset(sf::IntRect ir, sf::Vector2f pos)
-{
 
-}
 
 //
 //Invader Update
@@ -98,15 +103,15 @@ void Invader::Update(const float& dt)
 
 	if (_exploded)
 	{
-		bool gone = false;
 		deathtime -= dt;
-		if (deathtime <= 0 && !gone) 
+		if (deathtime <= 0) 
 		{
 			setTextureRect(IntRect(0, 0, 0, 0));
-			gone = true;
+
 			deathtime = 0.2f;
 		}
 	}
+
 }
 
 //
@@ -119,6 +124,7 @@ Player::Player(sf::IntRect ir, sf::Vector2f pos) : Ship(ir)
 {
 	setOrigin(16, 16);
 	setPosition(pos);
+	spawn = pos;
 }
 
 bool canShoot = true;
@@ -151,6 +157,17 @@ void Player::Update(const float &dt)
 			Bullet::Fire(pos, false);
 			firetime = 0.7f;
 			canShoot = false;
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::L))
+		{
+			for (auto& s : ships) 
+			{
+				if (s != player) 
+				{
+					s->Explode();
+				}
+			}
 		}
 
 		if (!Keyboard::isKeyPressed(Keyboard::Space))canShoot = true;
