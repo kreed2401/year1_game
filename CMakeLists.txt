@@ -40,3 +40,9 @@ add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND}
     "${PROJECT_SOURCE_DIR}/res"
     ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res
 )
+
+#### TileEngine ####
+file(GLOB_RECURSE SOURCES 3_TileEngine/*.cpp 3_TileEngine/*.h)
+add_executable(3_TileEngine ${SOURCES})
+target_include_directories(3_TileEngine PRIVATE ${SFML_INCS})
+target_link_libraries(3_TileEngine sfml-graphics)
