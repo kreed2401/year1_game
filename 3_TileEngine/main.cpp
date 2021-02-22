@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "Entity.h"
 #include "game.h"
+#include "LevelSystem.h"
+
+
 using namespace sf;
 using namespace std;
 
@@ -9,7 +12,7 @@ Player player;
 
 void Load() 
 {
-    
+ls::loadLevelFile("res/levels/maze_2.txt");
 
 }
 
