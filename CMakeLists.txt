@@ -46,3 +46,9 @@ file(GLOB_RECURSE SOURCES 3_TileEngine/*.cpp 3_TileEngine/*.h)
 add_executable(3_TileEngine ${SOURCES})
 target_include_directories(3_TileEngine PRIVATE ${SFML_INCS})
 target_link_libraries(3_TileEngine sfml-graphics)
+
+## Tile loader lib
+file(GLOB_RECURSE SOURCE_FILES lib_tile_level_loader/*.cpp lib_tile_level_loader/*.h)
+add_library(lib_tile_level_loader STATIC ${SOURCE_FILES})
+target_include_directories(lib_tile_level_loader INTERFACE "${CMAKE_SOURCE_DIR}/lib_tile_level_loader/" )
+target_link_libraries(lib_tile_level_loader sfml-graphics)
