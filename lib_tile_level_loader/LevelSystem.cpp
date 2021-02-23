@@ -41,14 +41,12 @@ int LevelSystem::getWidth()
     return _width;
 }
 
-//LevelSystem.cpp
 void LevelSystem::loadLevelFile(const std::string& path, float tileSize) 
 {
     _tileSize = tileSize;
     size_t w = 0, h = 0;
     string buffer;
 
-    // Load in file to buffer
     ifstream f(path);
     if (f.good()) 
     {
@@ -86,21 +84,21 @@ void LevelSystem::loadLevelFile(const std::string& path, float tileSize)
         case 'n':
             temp_tiles.push_back(ENEMY);
             break;
-        case '\n':      // end of line
-            if (w == 0) { // if we haven't written width yet
-                w = i;      // set width
+        case '\n':      
+            if (w == 0) { 
+                w = i;      
             }
-            h++; // increment height
+            h++;
             break;
         default:
-            cout << c << endl; // Don't know what this tile type is
+            cout << c << endl; 
         }
     }
     if (temp_tiles.size() != (w * h)) {
         throw string("Can't parse level file") + path;
     }
     _tiles = std::make_unique<TILE[]>(w * h);
-    _width = w; //set static class vars
+    _width = w; 
     _height = h;
     std::copy(temp_tiles.begin(), temp_tiles.end(), &_tiles[0]);
     cout << "Level " << path << " Loaded. " << w << "x" << h << std::endl;
@@ -110,8 +108,10 @@ void LevelSystem::loadLevelFile(const std::string& path, float tileSize)
 void LevelSystem::buildSprites() 
 {
     _sprites.clear();
-    for (size_t y = 0; y < LevelSystem::getHeight(); ++y) {
-        for (size_t x = 0; x < LevelSystem::getWidth(); ++x) {
+    for (size_t y = 0; y < LevelSystem::getHeight(); ++y) 
+    {
+        for (size_t x = 0; x < LevelSystem::getWidth(); ++x) 
+        {
             auto s = make_unique<RectangleShape>();
             s->setPosition(getTilePosition({ x, y }));
             s->setSize(Vector2f(_tileSize, _tileSize));
@@ -132,4 +132,20 @@ LevelSystem::TILE LevelSystem::getTile(Vector2ul p)
         throw string("Tile out of range: ") + to_string(p.x) + "," + to_string(p.y) + ")";
     }
     return _tiles[(p.y * _width) + p.x];
+}
+
+LevelSystem::TILE LevelSystem::getTileAt(Vector2f v) 
+{
+    auto a = v - _offset;
+    if (a.x < 0 || a.y < 0) {
+        throw string("Tile out of range ");
+    }
+    return getTile(Vector2ul((v - _offset) / (_tileSize)));
+}
+
+void LevelSystem::Render(RenderWindow& window) 
+{
+    for (size_t i = 0; i < _width * _height; ++i) {
+        window.draw(*_sprites[i]);
+    }
 }
