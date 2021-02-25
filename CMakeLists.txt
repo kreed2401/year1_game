@@ -26,7 +26,7 @@ add_executable(PRACTICAL_1 ${SOURCES})
 target_include_directories(PRACTICAL_1 PRIVATE ${SFML_INCS})
 target_link_libraries(PRACTICAL_1 sfml-graphics)
 
-## Space invaders ####
+#### Space invaders ####
 file(GLOB_RECURSE SOURCES 2_invaders/*.cpp 2_invaders/*.h)
 add_executable(2_INVADERS ${SOURCES} )
 target_include_directories(2_INVADERS SYSTEM PRIVATE ${SFML_INCS})
@@ -51,12 +51,16 @@ add_executable(3_TileEngine ${SOURCES})
 target_include_directories(3_TileEngine PRIVATE ${SFML_INCS})
 target_link_libraries(3_TileEngine lib_tile_level_loader sfml-graphics)
 
-## Tile loader lib
+## Tile loader lib ##
 file(GLOB_RECURSE SOURCE_FILES lib_tile_level_loader/*.cpp lib_tile_level_loader/*.h)
 add_library(lib_tile_level_loader STATIC ${SOURCE_FILES})
 target_include_directories(lib_tile_level_loader INTERFACE "${CMAKE_SOURCE_DIR}/lib_tile_level_loader/" )
 target_link_libraries(lib_tile_level_loader lib_maths sfml-graphics)
 
-
+#### Pacman ####
+file(GLOB_RECURSE SOURCES 4_Pacman/*.cpp 4_Pacman/*.h)
+add_executable(4_Pacman ${SOURCES} )
+target_include_directories(4_Pacman SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(4_Pacman sfml-graphics)
 
 
