@@ -18,7 +18,7 @@ void Update(RenderWindow& window)
 
 void Render(RenderWindow& window)
 {
-    player->Render(window);
+    
 }
 
 int main()
