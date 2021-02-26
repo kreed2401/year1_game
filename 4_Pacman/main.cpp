@@ -4,10 +4,17 @@ using namespace sf;
 using namespace std;
 
 Player* player;
+vector<Entity*> entities;
 
 void load()
 {
-    player = new Player();
+    player = new Player(Vector2f(gameWidth / 2, gameHeight / 2),sf::Color::Yellow);
+    entities.push_back(player);
+    for (int i = 0; i != 4; i++) 
+    {
+        Ghost* ghost = new Ghost(Vector2f(gameWidth / 3 + (i * 50), gameHeight / 3), sf::Color::Red);
+        entities.push_back(ghost);
+    }
 }
 
 void Update(RenderWindow& window)
@@ -18,7 +25,10 @@ void Update(RenderWindow& window)
 
 void Render(RenderWindow& window)
 {
-    
+    for(auto& e : entities)
+    {
+        e->Render(window);
+    }
 }
 
 int main()

@@ -4,8 +4,9 @@
 class Player : public Entity 
 {
 public:
-	Player(sf::Vector2f pos);
+	
 	Player();
+	Player(sf::Vector2f pos, sf::Color col);
 	void Update(const float& dt) override;
-	void Render(RenderWindow& window);
+	void Render(sf::RenderWindow& window) const;
 };

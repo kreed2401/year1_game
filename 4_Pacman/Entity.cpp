@@ -13,3 +13,7 @@ void Entity::Update(const float& dt)
 }
 
 Entity::~Entity() = default;
+
+void Entity::Render(RenderWindow& window) const
+{
+}
