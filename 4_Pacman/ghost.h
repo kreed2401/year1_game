@@ -1,12 +1,10 @@
 #pragma once
-#include "entity.h"
+#include "Entity.h"
 
-class Ghost : public Entity {
-private:
-	float _speed;
-
+class Ghost : public Entity
+{
 public:
-	void Update(double dt) override;
+	Ghost(sf::Vector2f pos);
 	Ghost();
-	void Render(sf::RenderWindow& window) const override;
+	void Update(const float& dt) override;
 };

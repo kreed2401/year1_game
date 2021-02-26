@@ -1,12 +1,11 @@
 #pragma once
-#include "entity.h"
+#include "Entity.h"
 
-class Player : public Entity {
-private:
-	float _speed;
-
+class Player : public Entity 
+{
 public:
-	void Update(double dt) override;
+	Player(sf::Vector2f pos);
 	Player();
-	void Render(sf::RenderWindow& window) const override;
+	void Update(const float& dt) override;
+	void Render(RenderWindow& window);
 };
