@@ -1,5 +1,6 @@
 #include "Ghost.h"
 #include "game.h"
+
 using namespace sf;
 using namespace std;
 
@@ -14,7 +15,8 @@ Ghost::Ghost(sf::Color col, int pos) :_speed(200.0f), Entity(make_unique<CircleS
 	_shape->setPosition(Vector2f(gameWidth / 2 + pos, gameHeight / 3));
 }
 
-void Ghost::Render(sf::RenderWindow& window) const 
+void Ghost::Render() const 
 {
-	window.draw(*_shape);
+	//window.draw(*_shape);
+	Renderer::queue(_shape.get());
 }

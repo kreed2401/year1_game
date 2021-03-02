@@ -41,7 +41,7 @@ Player::Player() :_speed(200.0f), Entity(make_unique<CircleShape>(10.0f))
 	_shape->setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
 }
 
-void Player::Render(sf::RenderWindow& window) const 
+void Player::Render() const 
 {
 	//window.draw(*_shape);
 	Renderer::queue(_shape.get());

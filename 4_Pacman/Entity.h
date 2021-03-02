@@ -15,7 +15,7 @@ public:
 	virtual ~Entity() = default;
 
 	virtual void Update(const double dt);
-	virtual void Render(sf::RenderWindow& window) const = 0;
+	virtual void Render() const = 0;
 
 	const sf::Vector2f getPosition();
 	void setPosition(const sf::Vector2f& pos);
@@ -25,6 +25,6 @@ struct EntityManager
 	{
 		std::vector<std::shared_ptr<Entity>> list;
 		void update(double dt);
-		void render(sf::RenderWindow& window);
+		void render();
 	};
 };

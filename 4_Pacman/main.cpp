@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Ghost.h"
 #include "game.h"
-
+#include "pacman.h"
 
 using namespace sf;
 using namespace std;
@@ -13,24 +13,21 @@ using namespace std;
 
 sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "Pacman");
 
-Entity::EntityManager em;
-
-//Ghost ghost;
-
+shared_ptr<Scene> gameScene;
+shared_ptr<Scene> menuScene;
+shared_ptr<Scene> activeScene;
 
 void Load()
 {
     Renderer::initialise(window);
-    shared_ptr<Player>player(new Player()) ;
-    em.list.push_back(player);
-    shared_ptr<Ghost>ghost1(new Ghost(sf::Color::Red, -30));
-    shared_ptr<Ghost>ghost2(new Ghost(sf::Color::Blue, -10));
-    shared_ptr<Ghost>ghost3(new Ghost(sf::Color::Magenta, 10));
-    shared_ptr<Ghost>ghost4(new Ghost(sf::Color::Cyan, 30));
-    em.list.push_back(ghost1);
-    em.list.push_back(ghost2);
-    em.list.push_back(ghost3);
-    em.list.push_back(ghost4);
+
+    // Load Scene-Local Assets
+    gameScene.reset(new GameScene());
+    menuScene.reset(new MenuScene());
+    gameScene->load();
+    menuScene->load();
+    // Start at main menu
+    activeScene = menuScene;
 }
 
 
@@ -52,14 +49,14 @@ void Update(RenderWindow& window)
     {
         window.close();
     }
-
-    em.update(dt);
+    activeScene->update(dt);
+    //em.update(dt);
 }
 
 void Render(sf::RenderWindow& window)
 {
-
-    em.render(window);
+    activeScene->render();
+    //em.render();
     Renderer::render();
 }
 

@@ -8,5 +8,5 @@ private:
 public:
 	void Update(double dt) override;
 	Ghost(sf::Color col, int pos);
-	void Render(sf::RenderWindow& window) const override;
+	void Render() const override;
 };
