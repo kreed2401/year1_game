@@ -1,19 +1,29 @@
-#include "game.h"
-
-using namespace sf;
+#include "Entity.h"
+#include "system_renderer.h"
 using namespace std;
+using namespace sf;
 
-
-
-Entity::Entity() {};
-
-void Entity::Update(const float& dt)
-{
-
+const Vector2f Entity::getPosition() { return _position; }
+void Entity::setPosition(const Vector2f& pos) { _position = pos; }
+void Entity::move(const Vector2f& pos) { _position += pos; }
+void Entity::Update(const double dt) { _shape->setPosition(_position);
 }
 
-Entity::~Entity() = default;
+Entity::Entity(unique_ptr<Shape> s) : _shape(std::move(s)) {}
 
-void Entity::Render(RenderWindow& window) const
+
+void Entity::EntityManager::render(RenderWindow& window)
 {
+	for(auto e : list)
+	{
+		e->Render(window);
+	}
+}
+
+void Entity::EntityManager::update(const double dt)
+{
+	for(auto& e : list)
+	{
+		e->Update(dt);
+	}
 }
