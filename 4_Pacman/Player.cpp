@@ -1,6 +1,7 @@
-#include "Player.h"
+/*#include "Player.h"
 #include "system_renderer.h"
 #include "game.h"
+
 using namespace sf;
 using namespace std;
 
@@ -12,7 +13,7 @@ const Keyboard::Key controls[4] =
 	Keyboard::D,  //Right
 };
 
-void Player::Update(double dt) 
+void Player::update(double dt) 
 {
 	//Move in four directions based on keys
 	if (Keyboard::isKeyPressed(Keyboard::A)) 
@@ -31,18 +32,16 @@ void Player::Update(double dt)
 	{
 		move(Vector2f(0, -_speed * dt));
 	}
-	Entity::Update(dt);
+	Entity::update(dt);
 }
 
-Player::Player() :_speed(200.0f), Entity(make_unique<CircleShape>(10.0f)) 
+Player::Player() 
 {
-	_shape->setFillColor(Color::Yellow);
-	_shape->setOrigin(Vector2f(25.0f, 25.0f));
-	_shape->setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
+
 }
 
-void Player::Render() const 
+void Player::render()
 {
 	//window.draw(*_shape);
-	Renderer::queue(_shape.get());
-}
+	//Renderer::queue(_shape.get());
+}*/

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "Entity.h"
+#include "ecm.h"
 #include "system_renderer.h"
 #include "Player.h"
 #include "Ghost.h"

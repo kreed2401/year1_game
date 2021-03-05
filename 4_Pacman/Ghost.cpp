@@ -1,22 +1,18 @@
-#include "Ghost.h"
+/*#include "Ghost.h"
 #include "game.h"
 
 using namespace sf;
 using namespace std;
 
-void Ghost::Update(double dt) {
+void Ghost::update(double dt) {
 
-	Entity::Update(dt);
+	Entity::update(dt);
 }
 
-Ghost::Ghost(sf::Color col, int pos) :_speed(200.0f), Entity(make_unique<CircleShape>(10.0f)) {
-	_shape->setFillColor(col);
-	_shape->setOrigin(Vector2f(5.0f, 5.0f));
-	_shape->setPosition(Vector2f(gameWidth / 2 + pos, gameHeight / 3));
-}
+Ghost::Ghost() {}
 
-void Ghost::Render() const 
+void Ghost::render()
 {
 	//window.draw(*_shape);
-	Renderer::queue(_shape.get());
-}
+	//Renderer::queue(_shape.get());
+}*/

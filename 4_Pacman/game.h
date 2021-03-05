@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "system_renderer.h"
-#include "Entity.h"
+#include "ecm.h"
 #include "Player.h"
 #include "Ghost.h"
 #include <memory>

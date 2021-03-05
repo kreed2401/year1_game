@@ -1,12 +1,12 @@
 #pragma once
-#include "Entity.h"
+#include "ecm.h"
 
 class Ghost :public Entity {
 private:
 	float _speed;
 
 public:
-	void Update(double dt) override;
-	Ghost(sf::Color col, int pos);
-	void Render() const override;
+	void update(double dt) override;
+	Ghost();
+	void render() override;
 };

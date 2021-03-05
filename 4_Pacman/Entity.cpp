@@ -1,4 +1,4 @@
-#include "Entity.h"
+/*#include "Entity.h"
 #include "system_renderer.h"
 using namespace std;
 using namespace sf;
@@ -26,4 +26,4 @@ void Entity::EntityManager::update(const double dt)
 	{
 		e->Update(dt);
 	}
-}
+}*/

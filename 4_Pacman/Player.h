@@ -1,12 +1,12 @@
 #pragma once
-#include "Entity.h"
+#include "ecm.h"
 
 class Player :public Entity {
 private:
 	float _speed;
 
 public:
-	void Update(double dt) override;
+	void update(double dt) override;
 	Player();
-	void Render() const override;
+	void render() override;
 };

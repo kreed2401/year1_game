@@ -1,5 +1,8 @@
 #include "pacman.h"
 #include "game.h"
+#include "ecm.h"
+#include "cmp_sprite.h"
+
 
 using namespace std;
 using namespace sf;
@@ -44,18 +47,39 @@ void MenuScene::load()
 
 Entity::EntityManager em;
 
+#define GHOSTS_COUNT 4
+
 void GameScene::load() 
 {
+    /*
     shared_ptr<Player>player(new Player());
     em.list.push_back(player);
-    shared_ptr<Ghost>ghost1(new Ghost(sf::Color::Red, -30));
-    shared_ptr<Ghost>ghost2(new Ghost(sf::Color::Blue, -10));
-    shared_ptr<Ghost>ghost3(new Ghost(sf::Color::Magenta, 10));
-    shared_ptr<Ghost>ghost4(new Ghost(sf::Color::Cyan, 30));
-    em.list.push_back(ghost1);
-    em.list.push_back(ghost2);
-    em.list.push_back(ghost3);
-    em.list.push_back(ghost4);
+    
+    shared_ptr<Ghost>ghost(new Ghost());
+    auto s = ghost->addComponent<ShapeComponent>();
+    s->setShape<sf::CircleShape>(12.f);
+    em.list.push_back(ghost);
+    */
+    auto player = make_shared<Entity>();
+    auto s = player->addComponent<ShapeComponent>();
+    s->setShape<sf::CircleShape>(12.f);
+    s->getShape().setFillColor(Color::Yellow);
+    s->getShape().setOrigin(Vector2f(21.f, 12.f));
+    
+    _ents.list.push_back(player);
+
+    const sf::Color ghost_cols[]{ { 208,62,25 }, { 213,133,28 }, { 70,191,238 }, { 234,130,229 } };
+
+    for(int i = 0; i < GHOSTS_COUNT; ++i)
+    {
+        auto ghost = make_shared<Entity>();
+        auto s = ghost->addComponent<ShapeComponent>();
+        s->setShape<sf::CircleShape>(12.f);
+        s->getShape().setFillColor(ghost_cols[i % 4]);
+        s->getShape().setOrigin(Vector2f(12.f, 12.f));
+
+        _ents.list.push_back(ghost);
+    }
 }
 
 void GameScene::update(double dt)
