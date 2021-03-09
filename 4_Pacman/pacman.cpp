@@ -14,7 +14,8 @@ sf::Text text;
 void Scene::render() { _ents.render(); }
 void Scene::update(double dt) { _ents.update(dt); }
 
-void MenuScene::update(double dt) {
+void MenuScene::update(double dt) 
+{
 	Scene::update(dt);
 
 	
@@ -45,8 +46,6 @@ void MenuScene::load()
 }
 
 
-Entity::EntityManager em;
-
 #define GHOSTS_COUNT 4
 
 void GameScene::load() 
@@ -60,6 +59,8 @@ void GameScene::load()
     s->setShape<sf::CircleShape>(12.f);
     em.list.push_back(ghost);
     */
+
+
     auto player = make_shared<Entity>();
     auto s = player->addComponent<ShapeComponent>();
     s->setShape<sf::CircleShape>(12.f);
@@ -80,19 +81,28 @@ void GameScene::load()
 
         _ents.list.push_back(ghost);
     }
+
+    for(auto s : _ents.list)
+    {
+        cout << " ###THERE IS AN ENTITY### ";
+    }
+
+    player->setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
+    cout << (player->getPosition());
 }
 
 void GameScene::update(double dt)
 {
-    em.update(dt);
+    _ents.update(dt);
     if (Keyboard::isKeyPressed(Keyboard::Tab)) 
     {
         activeScene = menuScene;
     }
     Scene::update(dt);
+    
 }
 
 void GameScene::render()
 {
-    em.render();
+    _ents.render();
 }

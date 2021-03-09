@@ -12,5 +12,5 @@ public:
 	std::vector<std::shared_ptr<Entity>>& getEnts();
 
 protected:
-	Entity::EntityManager _ents;
+	EntityManager _ents;
 };

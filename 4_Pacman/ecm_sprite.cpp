@@ -6,7 +6,11 @@ void ShapeComponent::update(double dt)
 	_shape->setPosition(_parent->getPosition());
 }
 
-void ShapeComponent::render() { Renderer::queue(_shape.get()); }
+void ShapeComponent::render() 
+{ 
+	Renderer::queue(_shape.get()); 
+	//std::cout << "Render";
+}
 
 sf::Shape& ShapeComponent::getShape() const { return *_shape; }
 

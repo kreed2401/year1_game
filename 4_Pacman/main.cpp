@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "ecm.h"
+#include "cmp_sprite.h"
 #include "system_renderer.h"
 #include "Player.h"
 #include "Ghost.h"
@@ -16,6 +17,8 @@ sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "Pacman");
 shared_ptr<Scene> gameScene;
 shared_ptr<Scene> menuScene;
 shared_ptr<Scene> activeScene;
+
+EntityManager ecm;
 
 void Load()
 {
@@ -50,13 +53,14 @@ void Update(RenderWindow& window)
         window.close();
     }
     activeScene->update(dt);
-    //em.update(dt);
+    ecm.update(dt);
 }
 
 void Render(sf::RenderWindow& window)
 {
     activeScene->render();
-    //em.render();
+    ecm.render();
+    
     Renderer::render();
 }
 

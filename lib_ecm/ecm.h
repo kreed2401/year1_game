@@ -45,13 +45,13 @@ std::shared_ptr<T> addComponent(Targs... params)
 		return sp;
 	}
 
+};
+
 struct EntityManager
 {
 	std::vector<std::shared_ptr<Entity>> list;
 	void update(double dt);
 	void render();
-};
-
 };
 
 class Component 
