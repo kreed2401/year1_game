@@ -47,6 +47,19 @@ std::shared_ptr<T> addComponent(Targs... params)
 
 };
 
+template <typename T>
+const std::vector<std::shared_ptr<T>> GetCompatibleComponent() {
+	static_assert(std::is_base_of<Component, T>::value, "T != component");
+	std::vector<std::shared_ptr<T>> ret;
+	for (auto c : _components) {
+		auto dd = dynamic_cast<T*>(&(*c));
+		if (dd) {
+			ret.push_back(std::dynamic_pointer_cast<T>(c));
+		}
+	}
+	return ret;
+}
+
 struct EntityManager
 {
 	std::vector<std::shared_ptr<Entity>> list;

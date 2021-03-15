@@ -18,7 +18,7 @@ void Entity::render()
 
 void Entity::update(double dt) 
 {
-	cout << "Hello";
+	
 }
 
 void EntityManager::render() 
@@ -28,7 +28,7 @@ void EntityManager::render()
 	for(auto e : list)
 	{
 		e->render();
-		cout << "EM RENDER";
+		
 	}
 
 }

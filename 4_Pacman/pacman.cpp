@@ -2,6 +2,7 @@
 #include "game.h"
 #include "ecm.h"
 #include "cmp_sprite.h"
+#include "cmp_actor_movement.h"
 
 
 using namespace std;
@@ -66,6 +67,8 @@ void GameScene::load()
     s->setShape<sf::CircleShape>(12.f);
     s->getShape().setFillColor(Color::Yellow);
     s->getShape().setOrigin(Vector2f(21.f, 12.f));
+
+    player->addComponent<PlayerMovementComponent>();
     
     _ents.list.push_back(player);
 
@@ -79,12 +82,14 @@ void GameScene::load()
         s->getShape().setFillColor(ghost_cols[i % 4]);
         s->getShape().setOrigin(Vector2f(12.f, 12.f));
 
+        ghost->addComponent<EnemyAIComponent>();
+
         _ents.list.push_back(ghost);
     }
 
     for(auto s : _ents.list)
     {
-        cout << " ###THERE IS AN ENTITY### ";
+        
     }
 
     player->setPosition(Vector2f(gameWidth / 2, gameHeight / 2));

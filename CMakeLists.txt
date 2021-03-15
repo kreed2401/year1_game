@@ -67,6 +67,6 @@ target_link_libraries(4_Pacman sfml-graphics lib_ecm)
 file(GLOB_RECURSE SOURCE_FILES lib_ecm/*.cpp lib_ecm/*.h)
 add_library(lib_ecm STATIC ${SOURCE_FILES})
 target_include_directories(lib_ecm INTERFACE "${CMAKE_SOURCE_DIR}/lib_ecm" )
-target_link_libraries(lib_ecm lib_maths)
+target_link_libraries(lib_ecm lib_maths lib_tile_level_loader)
 
 
