@@ -58,5 +58,6 @@ EnemyAIComponent::EnemyAIComponent(Entity* p) : ActorMovementComponent(p) {};
 void EnemyAIComponent::update(double dt)
 {
 
+
 }
 
