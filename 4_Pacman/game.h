@@ -6,5 +6,5 @@
 #include "Player.h"
 #include "Ghost.h"
 #include <memory>
-constexpr uint16_t gameWidth = 800;
-constexpr uint16_t gameHeight = 600;
+constexpr uint16_t gameWidth = 700;
+constexpr uint16_t gameHeight = 725;

@@ -8,6 +8,7 @@ extern std::shared_ptr<Scene> gameScene;
 extern std::shared_ptr<Scene> menuScene;
 extern std::shared_ptr<Scene> activeScene;
 
+
 class MenuScene : public Scene 
 {
 private:
@@ -26,7 +27,8 @@ private:
 	sf::Text text;
 	sf::Clock scoreClock;
 	void respawn();
-
+	std::shared_ptr<Entity> player;
+	std::vector<std::shared_ptr<Entity>> ghosts;
 public:
 	GameScene() = default;
 	void update(double dt) override;

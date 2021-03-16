@@ -41,6 +41,8 @@ int LevelSystem::getWidth()
     return _width;
 }
 
+
+
 void LevelSystem::loadLevelFile(const std::string& path, float tileSize) 
 {
     _tileSize = tileSize;
@@ -105,6 +107,26 @@ void LevelSystem::loadLevelFile(const std::string& path, float tileSize)
     buildSprites();
 }
 
+std::vector<sf::Vector2ul> LevelSystem::findTiles(TILE t)
+{
+    std::vector<sf::Vector2ul> foundTiles;
+
+    /*for(int i = 0; i < sizeof(_tiles); i++)
+    {
+        if (_tiles[i] == t) foundTiles.push_back(Vector2ul());
+    }
+    return foundTiles;
+    */
+    for (size_t y = 0; y < _height; ++y) 
+    {
+        for (size_t x = 0; x < _width; ++x) 
+        {
+            if (LevelSystem::getTile(Vector2ul(x, y)) == t)foundTiles.push_back(Vector2ul(x, y));
+        }
+    }
+    return foundTiles;
+}
+
 void LevelSystem::buildSprites() 
 {
     _sprites.clear();
@@ -128,7 +150,9 @@ Vector2f LevelSystem::getTilePosition(Vector2ul p)
 
 LevelSystem::TILE LevelSystem::getTile(Vector2ul p) 
 {
-    if (p.x > _width || p.y > _height) {
+    if (p.x > _width || p.y > _height) 
+    {
+        cout << p.y << endl;
         throw string("Tile out of range: ") + to_string(p.x) + "," + to_string(p.y) + ")";
     }
     return _tiles[(p.y * _width) + p.x];
@@ -149,3 +173,4 @@ void LevelSystem::Render(RenderWindow& window)
         window.draw(*_sprites[i]);
     }
 }
+

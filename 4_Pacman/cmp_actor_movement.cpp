@@ -9,8 +9,12 @@ ActorMovementComponent::ActorMovementComponent(Entity* p) : _speed(100.0f), Comp
 
 bool ActorMovementComponent::validMove(const Vector2f& pos)
 {
-	//return (LevelSystem::getTileAt(pos) != LevelSystem::WALL);
-	return true;
+	std::cout << pos.x;
+	std::cout << ",";
+	std::cout << pos.y;
+	std::cout << "\n";
+	return (LevelSystem::getTileAt(pos) != LevelSystem::WALL);
+	//return true;
 }
 
 void ActorMovementComponent::move(const Vector2f& p)
@@ -43,16 +47,21 @@ const Keyboard::Key controls[4] =
 
 PlayerMovementComponent::PlayerMovementComponent(Entity* p) : ActorMovementComponent(p) {};
 
+Vector2f direction;
+
 void PlayerMovementComponent::update(double dt)
 {
-	if (Keyboard::isKeyPressed(controls[0]))move(Vector2f(0, -_speed * dt));
-	if (Keyboard::isKeyPressed(controls[1])) move(Vector2f(0, _speed * dt));
-	if (Keyboard::isKeyPressed(controls[2])) move(Vector2f(-_speed * dt, 0));
-	if (Keyboard::isKeyPressed(controls[3])) move(Vector2f(_speed * dt, 0));
+
+	if (Keyboard::isKeyPressed(controls[0])) direction = (Vector2f(0, -_speed * dt));
+	if (Keyboard::isKeyPressed(controls[1])) direction = (Vector2f(0, _speed * dt));
+	if (Keyboard::isKeyPressed(controls[2])) direction = (Vector2f(-_speed * dt, 0));
+	if (Keyboard::isKeyPressed(controls[3])) direction = (Vector2f(_speed * dt, 0));
+
+	move(direction);
 }
 
 //################################ACTOR#############################################
-
+/*
 EnemyAIComponent::EnemyAIComponent(Entity* p) : ActorMovementComponent(p) {};
 
 void EnemyAIComponent::update(double dt)
@@ -60,4 +69,5 @@ void EnemyAIComponent::update(double dt)
 
 
 }
+*/
 

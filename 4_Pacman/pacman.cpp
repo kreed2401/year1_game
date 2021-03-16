@@ -3,7 +3,8 @@
 #include "ecm.h"
 #include "cmp_sprite.h"
 #include "cmp_actor_movement.h"
-
+#include "LevelSystem.h"
+#include "cmp_enemy_ai.h"
 
 using namespace std;
 using namespace sf;
@@ -18,8 +19,6 @@ void Scene::update(double dt) { _ents.update(dt); }
 void MenuScene::update(double dt) 
 {
 	Scene::update(dt);
-
-	
 
     if (Keyboard::isKeyPressed(Keyboard::Space)) 
     {
@@ -51,28 +50,21 @@ void MenuScene::load()
 
 void GameScene::load() 
 {
-    /*
-    shared_ptr<Player>player(new Player());
-    em.list.push_back(player);
-    
-    shared_ptr<Ghost>ghost(new Ghost());
-    auto s = ghost->addComponent<ShapeComponent>();
-    s->setShape<sf::CircleShape>(12.f);
-    em.list.push_back(ghost);
-    */
 
-
-    auto player = make_shared<Entity>();
-    auto s = player->addComponent<ShapeComponent>();
+    auto plyr = make_shared<Entity>();
+    auto s = plyr->addComponent<ShapeComponent>();
     s->setShape<sf::CircleShape>(12.f);
     s->getShape().setFillColor(Color::Yellow);
-    s->getShape().setOrigin(Vector2f(21.f, 12.f));
-
-    player->addComponent<PlayerMovementComponent>();
-    
+    s->getShape().setOrigin(Vector2f(12.f, 12.f));
+    plyr->addComponent<PlayerMovementComponent>();
+    player = plyr;
     _ents.list.push_back(player);
 
     const sf::Color ghost_cols[]{ { 208,62,25 }, { 213,133,28 }, { 70,191,238 }, { 234,130,229 } };
+
+    ls::loadLevelFile("res/levels/pacman.txt", 25.0f);
+
+    vector<sf::Vector2ul> enemySpawns = ls::findTiles(ls::TILE::ENEMY);
 
     for(int i = 0; i < GHOSTS_COUNT; ++i)
     {
@@ -81,21 +73,38 @@ void GameScene::load()
         s->setShape<sf::CircleShape>(12.f);
         s->getShape().setFillColor(ghost_cols[i % 4]);
         s->getShape().setOrigin(Vector2f(12.f, 12.f));
-
         ghost->addComponent<EnemyAIComponent>();
-
+        ghosts.push_back(ghost);
         _ents.list.push_back(ghost);
+
     }
 
-    for(auto s : _ents.list)
+    
+
+    int ghostNo = 1;
+    /*for (size_t y = 0; y < ls::getHeight(); ++y)
     {
-        
-    }
-
-    player->setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
-    cout << (player->getPosition());
+        for (size_t x = 0; x < ls::getWidth(); ++x)
+        {
+            cout << ls::getTile({ x, y });
+        }
+        cout << endl;
+    }*/
+    respawn();
 }
 
+void GameScene::respawn() 
+{
+    player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+    player->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(150.f);
+    auto ghost_spawns = ls::findTiles(ls::ENEMY);
+    for (auto& g : ghosts) {
+        g->setPosition(
+            ls::getTilePosition(ghost_spawns[rand() % ghost_spawns.size()]));
+        g->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(100.0f);
+    }
+    
+}
 void GameScene::update(double dt)
 {
     _ents.update(dt);
@@ -105,10 +114,10 @@ void GameScene::update(double dt)
     }
     Scene::update(dt);
     
-    
 }
 
 void GameScene::render()
 {
+    ls::Render(Renderer::getWindow());
     _ents.render();
 }

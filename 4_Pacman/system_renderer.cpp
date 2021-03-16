@@ -30,7 +30,8 @@ void Renderer::render()
 	if (rw == nullptr) {
 		throw("No render window set!");
 	}
-	while (!sprites.empty()) {
+	while (!sprites.empty()) 
+	{
 		rw->draw(*sprites.front());
 		sprites.pop();
 	}

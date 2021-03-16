@@ -27,10 +27,11 @@ public:
     PlayerMovementComponent(Entity* p);
     void update(double dt) override;
 };
-
+/*
 class EnemyAIComponent : public ActorMovementComponent
 {
 public:
     EnemyAIComponent(Entity* p);
     void update(double dt) override;
 };
+*/
