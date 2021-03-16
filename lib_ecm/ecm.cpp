@@ -18,7 +18,10 @@ void Entity::render()
 
 void Entity::update(double dt) 
 {
-	
+	for(auto c : _components)
+	{
+		c->update(dt);
+	}
 }
 
 void EntityManager::render() 
@@ -35,7 +38,10 @@ void EntityManager::render()
 
 void EntityManager::update(double dt) 
 {
-
+	for(auto e : list)
+	{
+		e->update(dt);
+	}
 }
 
 void Entity::setPosition(const Vector2f& pos) { _position = pos; }

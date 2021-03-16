@@ -105,6 +105,7 @@ void GameScene::update(double dt)
     }
     Scene::update(dt);
     
+    
 }
 
 void GameScene::render()
