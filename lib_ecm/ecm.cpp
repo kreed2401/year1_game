@@ -44,7 +44,12 @@ void EntityManager::update(double dt)
 	}
 }
 
-void Entity::setPosition(const Vector2f& pos) { _position = pos; }
+void Entity::setPosition(const Vector2f& pos) 
+{ 
+	cout << pos.x << endl;
+	cout << pos.y << endl;
+	_position = pos; 
+}
 
 const Vector2f& Entity::getPosition() const { return _position; }
 

@@ -9,10 +9,6 @@ ActorMovementComponent::ActorMovementComponent(Entity* p) : _speed(100.0f), Comp
 
 bool ActorMovementComponent::validMove(const Vector2f& pos)
 {
-	std::cout << pos.x;
-	std::cout << ",";
-	std::cout << pos.y;
-	std::cout << "\n";
 	return (LevelSystem::getTileAt(pos) != LevelSystem::WALL);
 	//return true;
 }

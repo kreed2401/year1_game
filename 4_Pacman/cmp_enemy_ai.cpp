@@ -16,7 +16,7 @@ void EnemyAIComponent::update(double dt)
     //current position
     const Vector2f pos = _parent->getPosition();
     //next position
-    const Vector2f newpos = pos + _direction * mva;
+    const Vector2f newpos = pos +_direction * mva;
     //inverse of our current direction
     const Vector2i baddir = -1 * Vector2i(_direction);
     //random new direction
@@ -33,7 +33,8 @@ switch (_state)
         }
         else 
         {
-            move(newpos);//keep moving
+            cout << "AI_MOVING" << endl;
+            move(_direction * mva);//keep moving
         }
         
         break;
