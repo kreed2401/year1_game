@@ -113,7 +113,22 @@ void GameScene::update(double dt)
         activeScene = menuScene;
     }
     Scene::update(dt);
-    
+
+    for(auto& g : ghosts)
+    { 
+        
+        cout << length(g->getPosition() - player->getPosition()) << endl;
+        if(sqrt(pow(g->getPosition().y - player->getPosition().y, 2) + pow(g->getPosition().x - player->getPosition().x, 2)) < 30.0f)
+        {
+            cout << "GHOST" << endl;
+            cout << g->getPosition() << endl;
+            cout << "PLAYER" << endl;
+            cout << player->getPosition() << endl;
+            cout << "LENGTH" << endl;
+            cout << length(g->getPosition() - player->getPosition()) << endl;
+            respawn();
+        }
+    }
 }
 
 void GameScene::render()

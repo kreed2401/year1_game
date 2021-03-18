@@ -6,7 +6,7 @@ using namespace std;
 
 static const Vector2i directions[] = { {1, 0}, {0, 1}, {0, -1}, {-1, 0} };
 
-EnemyAIComponent::EnemyAIComponent(Entity* p) : ActorMovementComponent(p) { _state = ROAMING; }
+EnemyAIComponent::EnemyAIComponent(Entity* p) : ActorMovementComponent(p) { _state = ROTATING; }
 
 void EnemyAIComponent::update(double dt)
 {
@@ -33,8 +33,8 @@ switch (_state)
         }
         else 
         {
-            cout << "AI_MOVING" << endl;
             move(_direction * mva);//keep moving
+            //cout << "MOVING " << endl;
         }
         
         break;
@@ -42,14 +42,15 @@ switch (_state)
         
         while (
             //dont reverse
-            newdir != baddir &&
+            newdir == baddir &&
             //and dont pick a direction that will lead to a wall
-            LevelSystem::getTileAt(pos + Vector2f(newdir.x, newdir.y) * mva) != LevelSystem::WALL
+            LevelSystem::getTileAt(pos + Vector2f(newdir.x, newdir.y) * mva) == LevelSystem::WALL
             )
         {
             //pick new direction
             Vector2i newdir = directions[(rand() % 4)];
         }
+        cout << "ROTATED" << endl;
         _direction = Vector2f(newdir);
         _state = ROTATED;
         
@@ -62,6 +63,8 @@ switch (_state)
             _state = ROAMING;//yes
         }
         move(_direction * mva);//no
+        if (LevelSystem::getTileAt(newpos) == LevelSystem::WALL) _state = ROAMING;
+        //cout << "AM I STUCK HERE?" << endl;
         break;
     }
     ActorMovementComponent::update(dt);

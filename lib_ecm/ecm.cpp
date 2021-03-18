@@ -46,8 +46,6 @@ void EntityManager::update(double dt)
 
 void Entity::setPosition(const Vector2f& pos) 
 { 
-	cout << pos.x << endl;
-	cout << pos.y << endl;
 	_position = pos; 
 }
 

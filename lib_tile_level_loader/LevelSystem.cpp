@@ -14,7 +14,7 @@ Vector2f LevelSystem::_offset(0.0f, 0.0f);
 float LevelSystem::_tileSize(100.f);
 vector<std::unique_ptr<sf::RectangleShape>> LevelSystem::_sprites;
 
-std::map<LevelSystem::TILE, sf::Color> LevelSystem::_colours{ {WALL, Color::White}, {END, Color::Red} };
+std::map<LevelSystem::TILE, sf::Color> LevelSystem::_colours{ {WALL, Color::White}, {END, Color::Red}, {WAYPOINT, Color::Blue} };
 
 sf::Color LevelSystem::getColor(LevelSystem::TILE t) 
 {
