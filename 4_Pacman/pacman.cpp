@@ -5,6 +5,7 @@
 #include "cmp_actor_movement.h"
 #include "LevelSystem.h"
 #include "cmp_enemy_ai.h"
+#include "cmp_pickup.h"
 
 using namespace std;
 using namespace sf;
@@ -15,6 +16,9 @@ sf::Text text;
 
 void Scene::render() { _ents.render(); }
 void Scene::update(double dt) { _ents.update(dt); }
+std::vector<std::shared_ptr<Entity>>& Scene::getEnts() { return _ents.list; }
+
+vector<shared_ptr<Entity>> nibbles;
 
 void MenuScene::update(double dt) 
 {
@@ -79,18 +83,21 @@ void GameScene::load()
 
     }
 
-    
-
     int ghostNo = 1;
-    /*for (size_t y = 0; y < ls::getHeight(); ++y)
-    {
-        for (size_t x = 0; x < ls::getWidth(); ++x)
-        {
-            cout << ls::getTile({ x, y });
-        }
-        cout << endl;
-    }*/
+
+    
     respawn();
+}
+
+shared_ptr<Entity> makeNibble(const Vector2ul& nl, bool big)
+{
+    auto cherry = make_shared<Entity>();
+    auto s = cherry->addComponent<ShapeComponent>();
+    s->setShape < sf::CircleShape>(6.0f);
+    s->getShape().setFillColor(Color::Red);
+    cherry->addComponent<PickupComponent>(big);
+    cherry->setPosition(ls::getTilePosition(nl) + Vector2f(10.f, 10.f));
+    return cherry;
 }
 
 void GameScene::respawn() 
@@ -104,6 +111,11 @@ void GameScene::respawn()
         g->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(100.0f);
     }
     
+    for (auto n : nibbles)
+    {
+        n->setForDelete();
+        n->reset();
+    }
 }
 void GameScene::update(double dt)
 {
@@ -120,16 +132,11 @@ void GameScene::update(double dt)
         cout << length(g->getPosition() - player->getPosition()) << endl;
         if(sqrt(pow(g->getPosition().y - player->getPosition().y, 2) + pow(g->getPosition().x - player->getPosition().x, 2)) < 30.0f)
         {
-            cout << "GHOST" << endl;
-            cout << g->getPosition() << endl;
-            cout << "PLAYER" << endl;
-            cout << player->getPosition() << endl;
-            cout << "LENGTH" << endl;
-            cout << length(g->getPosition() - player->getPosition()) << endl;
             respawn();
         }
     }
 }
+
 
 void GameScene::render()
 {
