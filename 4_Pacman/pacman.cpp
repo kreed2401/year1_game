@@ -18,7 +18,8 @@ void Scene::render() { _ents.render(); }
 void Scene::update(double dt) { _ents.update(dt); }
 std::vector<std::shared_ptr<Entity>>& Scene::getEnts() { return _ents.list; }
 std::shared_ptr<Entity>& Scene::getPlayer() { return player; }
-void Scene::updateScore(float p) { score += p; }
+void Scene::updateScore(float p) { score += p; cout << score << endl; }
+void Scene::resetScore() { score = 0; }
 
 vector<shared_ptr<Entity>> nibbles;
 
@@ -104,14 +105,7 @@ shared_ptr<Entity> makeNibble(const Vector2ul& nl, bool big)
 
 void GameScene::respawn()
 {
-    player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
-    player->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(150.f);
-    auto ghost_spawns = ls::findTiles(ls::ENEMY);
-    for (auto& g : ghosts) {
-        g->setPosition(
-            ls::getTilePosition(ghost_spawns[rand() % ghost_spawns.size()]));
-        g->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(100.0f);
-    }
+    activeScene->resetScore();
 
     for (auto n : nibbles)
     {
@@ -129,12 +123,23 @@ void GameScene::respawn()
     }
 
     nibblesLoc = LevelSystem::findTiles(ls::WAYPOINT);
-    for(const auto& nl : nibblesLoc)
+    for (const auto& nl : nibblesLoc)
     {
         auto cherry = makeNibble(nl, true);
         _ents.list.push_back(cherry);
         nibbles.push_back(cherry);
     }
+
+    player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
+    player->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(150.f);
+    auto ghost_spawns = ls::findTiles(ls::ENEMY);
+    for (auto& g : ghosts) 
+    {
+        g->setPosition(
+            ls::getTilePosition(ghost_spawns[rand() % ghost_spawns.size()]));
+        g->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(100.0f);
+    }
+
 }
 
 
@@ -150,7 +155,7 @@ void GameScene::update(double dt)
     for(auto& g : ghosts)
     { 
         
-        cout << length(g->getPosition() - player->getPosition()) << endl;
+        
         if(sqrt(pow(g->getPosition().y - player->getPosition().y, 2) + pow(g->getPosition().x - player->getPosition().x, 2)) < 30.0f)
         {
             respawn();

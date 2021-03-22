@@ -50,7 +50,6 @@ switch (_state)
             //pick new direction
             Vector2i newdir = directions[(rand() % 4)];
         }
-        cout << "ROTATED" << endl;
         _direction = Vector2f(newdir);
         _state = ROTATED;
         

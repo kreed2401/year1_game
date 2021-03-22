@@ -41,12 +41,19 @@ void EntityManager::update(double dt)
 	for(auto e : list)
 	{
 		e->update(dt);
+		if (e->is_fordeletion()) e->~Entity();
 	}
 }
+
 
 void Entity::setPosition(const Vector2f& pos) 
 { 
 	_position = pos; 
+}
+
+bool Entity::is_fordeletion() const
+{
+	return _fordeletion;
 }
 
 const Vector2f& Entity::getPosition() const { return _position; }
@@ -57,5 +64,5 @@ Component::~Component() {}
 
 void Entity::setForDelete()
 {
-
+	_fordeletion = true;
 }
