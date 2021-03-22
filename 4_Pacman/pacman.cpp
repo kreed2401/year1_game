@@ -19,7 +19,7 @@ void Scene::update(double dt) { _ents.update(dt); }
 std::vector<std::shared_ptr<Entity>>& Scene::getEnts() { return _ents.list; }
 std::shared_ptr<Entity>& Scene::getPlayer() { return player; }
 void Scene::updateScore(float p) { score += p; cout << score << endl; }
-void Scene::resetScore() { score = 0; }
+
 
 vector<shared_ptr<Entity>> nibbles;
 
@@ -105,7 +105,6 @@ shared_ptr<Entity> makeNibble(const Vector2ul& nl, bool big)
 
 void GameScene::respawn()
 {
-    activeScene->resetScore();
 
     for (auto n : nibbles)
     {
