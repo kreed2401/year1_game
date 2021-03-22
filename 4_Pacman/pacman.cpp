@@ -17,6 +17,8 @@ sf::Text text;
 void Scene::render() { _ents.render(); }
 void Scene::update(double dt) { _ents.update(dt); }
 std::vector<std::shared_ptr<Entity>>& Scene::getEnts() { return _ents.list; }
+std::shared_ptr<Entity>& Scene::getPlayer() { return player; }
+void Scene::updateScore(float p) { score += p; }
 
 vector<shared_ptr<Entity>> nibbles;
 
@@ -95,12 +97,12 @@ shared_ptr<Entity> makeNibble(const Vector2ul& nl, bool big)
     auto s = cherry->addComponent<ShapeComponent>();
     s->setShape < sf::CircleShape>(6.0f);
     s->getShape().setFillColor(Color::Red);
-    cherry->addComponent<PickupComponent>(big);
+    cherry->addComponent<PickupComponent>();
     cherry->setPosition(ls::getTilePosition(nl) + Vector2f(10.f, 10.f));
     return cherry;
 }
 
-void GameScene::respawn() 
+void GameScene::respawn()
 {
     player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]));
     player->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(150.f);
@@ -110,13 +112,32 @@ void GameScene::respawn()
             ls::getTilePosition(ghost_spawns[rand() % ghost_spawns.size()]));
         g->GetCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(100.0f);
     }
-    
+
     for (auto n : nibbles)
     {
         n->setForDelete();
-        n->reset();
+        //n->reset();
+    }
+    nibbles.clear();
+
+    auto nibblesLoc = LevelSystem::findTiles(ls::EMPTY);
+    for (const auto& nl : nibblesLoc)
+    {
+        auto cherry = makeNibble(nl, false);
+        _ents.list.push_back(cherry);
+        nibbles.push_back(cherry);
+    }
+
+    nibblesLoc = LevelSystem::findTiles(ls::WAYPOINT);
+    for(const auto& nl : nibblesLoc)
+    {
+        auto cherry = makeNibble(nl, true);
+        _ents.list.push_back(cherry);
+        nibbles.push_back(cherry);
     }
 }
+
+
 void GameScene::update(double dt)
 {
     _ents.update(dt);
@@ -136,6 +157,7 @@ void GameScene::update(double dt)
         }
     }
 }
+
 
 
 void GameScene::render()

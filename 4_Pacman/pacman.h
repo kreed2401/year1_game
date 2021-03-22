@@ -27,11 +27,13 @@ private:
 	sf::Text text;
 	sf::Clock scoreClock;
 	void respawn();
-	std::shared_ptr<Entity> player;
+	
 	std::vector<std::shared_ptr<Entity>> ghosts;
+	float score;
 public:
 	GameScene() = default;
 	void update(double dt) override;
 	void render() override;
 	void load() override;
+	void updateScore(float p);
 };

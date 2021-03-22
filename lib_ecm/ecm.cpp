@@ -54,3 +54,8 @@ const Vector2f& Entity::getPosition() const { return _position; }
 Component::Component(Entity* const p) : _parent(p) {}
 
 Component::~Component() {}
+
+void Entity::setForDelete()
+{
+
+}
