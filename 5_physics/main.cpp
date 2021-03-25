@@ -91,16 +91,25 @@ void init()
 
 	Vector2f walls[] = 
 	{
+		//Top
 		Vector2f(gameWidth * .5f, 5.f), Vector2f(gameWidth, 10.f),
+		//Bottom
 		Vector2f(gameWidth * .5f, gameHeight - 5.f), Vector2f(gameWidth, 10.f),
+		//Left
 		Vector2f(5.f, gameHeight * .5f), Vector2f(10.f, gameHeight),
+		//Right
 		Vector2f(gameWidth - 5.f, gameHeight * .5f), Vector2f(10.f, gameHeight)
 	};
 
 	for (int i = 0; i < 7; i += 2) 
 	{
 		auto s = new RectangleShape();
-
+		s->setSize(walls[i+1]);
+		s->setPosition(walls[i]);
+		s->setFillColor(Color::White);
+		s->setOrigin(walls[i]);
+		sprites.push_back(s);
+		auto b = CreatePhysicsBox(*world, false, *s);
 	}
 
 }
